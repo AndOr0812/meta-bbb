@@ -1,6 +1,7 @@
-# This recipe creates a 3.13.1 kernel for beaglebone black machines
-# as detailled at ewiki.net/display/linuxonarm/BeagleBone+Black
-# all the hard parts where figured out by Robert C. Nelson
+# This recipe creates a patched 3.13.1 kernel for beaglebone black machines
+# as detailled in Robert C. Nelsons BBB custo Linux tutorial 
+# on http://ewiki.net/display/linuxonarm/BeagleBone+Black
+
 
 # we are building a kernel
 inherit kernel siteinfo
@@ -18,8 +19,7 @@ LINUX_VERSION_EXTENSION ?= "-bbb-${LINUX_KERNEL_TYPE}"
 FILESEXTRAPATHS_prepend := "${THISDIR}/patches:${THISDIR}/patches/arm:${THISDIR}/patches/arm:${THISDIR}/patches/audio:${THISDIR}/patches/capemgr:${THISDIR}/patches/cpufreq:${THISDIR}/patches/dts:${THISDIR}/patches/fixes:${THISDIR}/patches/merge-of-kobj-min-new-20131227:${THISDIR}/patches/saucy:${THISDIR}/patches/sgx:${THISDIR}/patches/sgx-blob:${THISDIR}/patches/usb:${THISDIR}/patches/wip:"
 
 
-# stable linux 3.13 kernel sources for tag 3.13.1
-#SRC_URI = "git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git;protocol=git;tag=v${PV}"
+# stable linux 3.13 kernel sources
 SRC_URI = "https://www.kernel.org/pub/linux/kernel/v3.x/linux-3.13.1.tar.gz"
 SRC_URI[md5sum] = "ce58e5933df2c53688d602e8a18d72c9"
 SRC_URI[sha256sum] = "d461e7d6ed57e5e482eab8ccc92c389eaadd585a14cac1bcf7fd317f5a8fd7ac"
@@ -76,45 +76,17 @@ SRC_URI += "file://0001-deb-pkg-Simplify-architecture-matching-for-cross-bui.pat
         file://0003-saucy-disable-stack-protector.patch \
 "
 
-
 # default config file for kernel (resides in ./patches), exchange if you want a customized kernel
 # the default config builds practically everything, except total fringe scenarios like ham radio
 SRC_URI += "file://defconfig"
 
 
 SECTION = "kernel"
-#figure licence check out later
-LICENSE = "CLOSED"
-#LICENSE = "GPLv2"
-#LIC_FILES_CHKSUM = "file://COPYING;md5=d7810fab7487fb0aad327b76f1be7cd7"
+LICENSE = "GPLv2"
+LIC_FILES_CHKSUM = "file://COPYING;md5=d7810fab7487fb0aad327b76f1be7cd7"
 
-# is this the directory to apply the patches?
-#S = "${WORKDIR}/${BP}"
-S = "${WORKDIR}/linux-3.13.1"
-# figure out working dir
-# tmp/work/bbb-poky-linux-gnueabi/linux-bbb/3.13.1-r0/linux-3.13.1/
-
-
-
-
-# The path to the work directory for the recipe (WORKDIR) depends on the recipe name and the architecture of the target device. For example, here is the work directory for recipes and resulting packages that are not device-dependent:
-
-#      ${TMPDIR}/work/${PACKAGE_ARCH}-poky-${TARGET_OS}/${PN}/${EXTENDPE}${PV}-${PR}
-            
-
-# Let's look at an example without variables. Assuming a top-level Source Directory named poky and a default Build Directory of poky/build, the following is the work directory for the acl recipe that creates the acl package:
-
-#      poky/build/tmp/work/i586-poky-linux/acl/2.2.51-r3/
-            
-
-# If your resulting package is dependent on the target device, the work directory varies slightly:
-
-#      ${TMPDIR}/work/${MACHINE}-poky-${TARGET_OS}/${PN}/${EXTENDPE}${PV}-${PR}
-            
-
-# Again, assuming top-level Source Directory named poky and a default Build Directory of poky/build, the following are the work and temporary source directories, respectively, for the acl package that is being built for a MIPS-based device:
-
-#      poky/build/tmp/work/mips-poky-linux/acl/2.2.51-r2
-#      poky/build/tmp/work/mips-poky-linux/acl/2.2.51-r2/acl-2.2.51
+# directory in which to apply the patches
+#S = "${WORKDIR}/linux-3.13.1"
+S = "${WORKDIR}/${PN}-${PV}"
             
 
