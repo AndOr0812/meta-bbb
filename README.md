@@ -1,0 +1,1 @@
+This is a yocto layer to build a custom image for Beaglebone blck. It will provide a 3.13.1 kernel, u-boot_2013.10, sysvinit and create approbiate .dtb and uEnv.txt files. It can also build a full SD-card image ready for dd.
