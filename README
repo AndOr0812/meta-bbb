@@ -125,7 +125,7 @@ If you find you're getting corrupt images on the USB (it doesn't show
 the syslinux boot: prompt, or the boot: prompt contains strange
 characters), try doing this first:
 
-# dd if=/dev/zero of=/dev/sdf bs=1M count=512
+dd if=/dev/zero of=/dev/sdf bs=1M count=512
 
 Insert the sd card into your Beaglebone Black and power up the
 system. To follow the boot messages, you will need to connect to your
